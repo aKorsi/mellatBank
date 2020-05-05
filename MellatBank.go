@@ -201,8 +201,7 @@ func (c *Client) VerifyRequest(orderId, saleOrderId, saleReferenceId int64, resC
 
 func (c *Client) MakeForm(refId, phoneNumber, body string) string {
 	return fmt.Sprintf(
-		`
-				<form name="input" action="%s" method="post" target="_self">
+		`<form id="payForm" name="payForm" action="%s" method="post" target="_self">
 					<input type="hidden" id="RefId" name="RefId" value='%s' />
 					<input type="hidden" id="mobileNo" name="MobileNo" value='%s' />
 					<div>%s</div>
@@ -213,4 +212,18 @@ func (c *Client) MakeForm(refId, phoneNumber, body string) string {
 		phoneNumber,
 		body,
 	)
+}
+
+type Peeker interface {
+	Peek(key string) []byte
+}
+
+func (c *Client) ParseCallBack(req Peeker) (SaleReferenceId, RefId, ResCode, SaleOrderId, CardHolderInfo, CardHolderPan string) {
+	SaleReferenceId = string(req.Peek("SaleReferenceId"))
+	RefId = string(req.Peek("RefId"))
+	ResCode = string(req.Peek("ResCode"))
+	SaleOrderId = string(req.Peek("SaleOrderId"))
+	CardHolderInfo = string(req.Peek("CardHolderInfo"))
+	CardHolderPan = string(req.Peek("CardHolderPan"))
+	return
 }
