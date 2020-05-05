@@ -2,6 +2,7 @@ package mellatBank
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -196,4 +197,20 @@ func (c *Client) VerifyRequest(orderId, saleOrderId, saleReferenceId int64, resC
 	}
 
 	return err
+}
+
+func (c *Client) MakeForm(refId, phoneNumber, body string) string {
+	return fmt.Sprintf(
+		`
+				<form name="input" action="%s" method="post" target="_self">
+					<input type="hidden" id="RefId" name="RefId" value='%s' />
+					<input type="hidden" id="mobileNo" name="MobileNo" value='%s' />
+					<div>%s</div>
+					<input type="submit" value="Submit" />
+				</form>`,
+		GatewayURL,
+		refId,
+		phoneNumber,
+		body,
+	)
 }
