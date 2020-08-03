@@ -205,7 +205,7 @@ func (c *Client) MakeForm(refId, phoneNumber, body string) string {
 					<input type="hidden" id="RefId" name="RefId" value='%s' />
 					<input type="hidden" id="mobileNo" name="MobileNo" value='%s' />
 					<div>%s</div>
-					<input type="submit" value="Submit" />
+					<input type="submit" value="پرداخت" />
 				</form>`,
 		GatewayURL,
 		refId,
